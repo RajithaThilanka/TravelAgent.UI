@@ -12,9 +12,8 @@ import ChatSidebar from "../components/chat/ChatSidebar";
 import { useChatAgentMutation } from "../api";
 
 const Home = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [inputMessage, setInputMessage] = useState("");
-  const [optionsVisible, setOptionsVisible] = useState(true); // For managing visibility of options
+  const [optionsVisible, setOptionsVisible] = useState(true);
   const {
     messages,
     isTyping,
@@ -37,30 +36,24 @@ const Home = () => {
     "Complaint",
   ];
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
-
   const onSendMessage = () => {
     handleSendMessage(inputMessage);
-    setInputMessage(""); // Clear input after sending
+    setInputMessage("");
   };
 
   const onKeyPress = (event: React.KeyboardEvent) => {
     handleKeyPress(event);
     if (event.key === "Enter" && !event.shiftKey) {
-      setInputMessage(""); // Reset input message after pressing Enter
+      setInputMessage("");
     }
   };
 
-  // Handle selecting an option and send it to the API
   const handleOptionSelect = (option: string) => {
-    setInputMessage(option); // Set input field with selected option
-    setOptionsVisible(false); // Hide the options once an option is selected
+    setInputMessage(option);
+    setOptionsVisible(false);
 
-    // Send the selected option to the API
-    chatAgent({ message: option, history: [] }) // Assuming chatAgent expects message and history
-      .unwrap() // Unwrap the response from the API
+    chatAgent({ message: option, history: [] })
+      .unwrap()
       .then((response) => {
         console.log("API Response:", response);
       })
@@ -68,7 +61,7 @@ const Home = () => {
         console.error("Error sending option:", error);
       });
 
-    handleSendMessage(); // Send the selected option as a message
+    handleSendMessage(message);
   };
 
   return (
@@ -96,7 +89,6 @@ const Home = () => {
           position: "relative",
         }}
       >
-        {/* Sidebar Toggle Column */}
         <Box
           sx={{
             width: "60px",
@@ -109,9 +101,9 @@ const Home = () => {
           }}
         >
           <IconButton
-            onClick={toggleDrawer}
+            onClick={() => {}}
             sx={{
-              color: isDrawerOpen ? "#5662E1" : "#9AA1B1",
+              color: "#9AA1B1",
               mb: 2,
               "&:hover": {
                 backgroundColor: "rgba(86, 98, 225, 0.1)",
@@ -141,8 +133,6 @@ const Home = () => {
           >
             <PersonIcon />
           </IconButton>
-
-          {/* Profile button at bottom */}
           <Box sx={{ marginTop: "auto" }}>
             <Avatar
               sx={{
@@ -157,10 +147,6 @@ const Home = () => {
           </Box>
         </Box>
 
-        {/* Chat History Drawer */}
-        {isDrawerOpen && <ChatSidebar chatHistory={chatHistory} />}
-
-        {/* Main Chat Area */}
         <Box
           sx={{
             display: "flex",
@@ -172,7 +158,6 @@ const Home = () => {
         >
           <ChatHeader />
 
-          {/* Messages Area */}
           <Box
             sx={{
               flexGrow: 1,
@@ -194,7 +179,6 @@ const Home = () => {
             <div ref={messagesEndRef} />
           </Box>
 
-          {/* Chat Input with Buttons */}
           {optionsVisible && (
             <Box
               sx={{
