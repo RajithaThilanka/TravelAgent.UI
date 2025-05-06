@@ -1,10 +1,15 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/home";
+import { createBrowserRouter } from 'react-router-dom';
+import Home from '../pages/Home';
+import About from '../pages/About';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Home />,
+  },
+  {
+    path: '/about',
+    element: <About />,
   },
 ]);
 
@@ -12,4 +17,4 @@ const AppRoutes = () => {
   return router;
 };
 
-export default AppRoutes;
+export default AppRoutes; 
